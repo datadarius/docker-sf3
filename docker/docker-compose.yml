@@ -11,8 +11,11 @@ services:
         container_name: "sf_web"
         ports:
             - 8080:80   #apache
+<<<<<<< HEAD
             - 8081:443   #apache secure
 
+=======
+>>>>>>> upstream/master
         volumes:
             - "../:/var/www/html"
             - "~/.composer:/var/www/.composer"
@@ -20,7 +23,6 @@ services:
             - ./sf_web/nerdpress.zsh-theme:/var/www/.oh-my-zsh/themes/nerdpress.zsh-theme:ro
         links:
             - db
-            - elasticsearch
             - mailcatcher
             - blackfire
         env_file:
@@ -59,6 +61,7 @@ services:
             - PMA_USER=root
             - PMA_PASSWORD=root
 
+<<<<<<< HEAD
     #elasticsearch
     elasticsearch:
         image: "elasticsearch:1.3"
@@ -68,6 +71,8 @@ services:
         ports:
             - 9201:9200
 
+=======
+>>>>>>> upstream/master
     #mailcatcher
     mailcatcher:
         container_name: "sf_mailcatcher"

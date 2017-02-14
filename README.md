@@ -74,6 +74,7 @@ Find the IP with:
 
 ### Otherwise use official phpmyadmin docker on [http://[docker-host]:8081](http://[docker-host]:8081) 
 
+<<<<<<< HEAD
 ## Other Services
 
 * [Elasticsearch](Resources/doc/services.md) 
@@ -96,3 +97,13 @@ Find the IP with:
 * Set up automated certificate creation and clarify to make it persist.
 * Create an image (e.g. on quay.io) to speed up installation.
 * Set up continous image builds. (e.g. on cve or othe source images changes)
+=======
+#### Mailcatcher SMTP
+
+```yml
+host: mailcatcher
+port: 1025
+```
+
+Webinterface on http://[yourhost*]:1080
+>>>>>>> upstream/master

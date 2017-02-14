@@ -15,6 +15,7 @@ RUN BASE_PKGS="ca-certificates locales zsh bash curl vim git zip mcrypt htop ssh
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+<<<<<<< HEAD
 #Change your timezone below. Full list of timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 RUN echo Europe/Berlin > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
@@ -29,6 +30,27 @@ RUN WEB_PKGS="apache2 nghttp2 php7.1 php7.1-mysql php7.1-sqlite php7.1-intl php-
 
 #Enable necessary Apache modules
 RUN a2enmod rewrite http2
+=======
+#Append software required during build here.
+RUN BUILD_PKGS="zlib1g-dev libicu-dev g++ libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev make" \
+    && apt-get update && apt-get install -y --no-install-recommends $BUILD_PKGS \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt mbstring exif zip opcache pdo_mysql pcntl \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && apt-get autoremove -y $BUILD_PKGS \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#Configure xdebug.
+RUN sed -i '1 a xdebug.remote_autostart=true' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN sed -i '1 a xdebug.remote_connect_back=1 ' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN sed -i '1 a xdebug.remote_enable=1' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN sed -i '1 a xdebug.max_nesting_level = 1200' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+>>>>>>> upstream/master
 
 #Install blackfire.
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
@@ -60,6 +82,10 @@ RUN chgrp -R www-data /var/www
 RUN chmod -R g+rwx /var/www
 RUN umask 0007
 
+<<<<<<< HEAD
 EXPOSE 80 443
 WORKDIR /var/www/html
 ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+=======
+WORKDIR /var/www/html
+>>>>>>> upstream/master

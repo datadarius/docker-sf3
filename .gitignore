@@ -1,3 +1,4 @@
+.DS_Store
 docker/data/sql
 docker/sf_web/Dockerfile
 docker/data/.bash_history

@@ -12,7 +12,7 @@ services:
         ports:
             - 8080:80   #apache
 
-            - 8081:443   #apache secure
+            - 8888:443   #apache secure
 
         volumes:
             - "../:/var/www/html"
